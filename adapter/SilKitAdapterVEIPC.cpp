@@ -26,18 +26,19 @@ const std::string adapters::defaultParticipantName = "SilKitAdapterVEIPC";
 void print_help(bool userRequested = false)
 {
     std::cout << "Usage (defaults in curly braces if you omit the switch):" << std::endl
-        << "sil-kit-adapter-veipc <host>:<port>,<toAdapterTopic>,<fromAdapterTopic> [" << participantNameArg
-        << " <participant's name{"<< defaultParticipantName <<"}>]" "\n"
-        "  [" << configurationArg << " <path to .silkit.yaml or .json configuration file>]\n"
-        "  [" << regUriArg << " silkit://<host{localhost}>:<port{8501}>]" "\n"
-        "  [" << logLevelArg << " <Trace|Debug|Warn|{Info}|Error|Critical|Off>]" "\n"
-        "  [" << endiannessArg << " <big|{little}>]" "\n"
-        "\nThe first positional argument is mandatory and must be of the form <host>:<port>,<toAdapterTopic>,<fromAdapterTopic>.\n"
-        "SIL Kit-specific CLI arguments will be overwritten by the config file passed by "
+        << "sil-kit-adapter-veipc <host>:<port>,\n"
+        << util_help::TopicSpecificationHelp()
+        << "  [" << participantNameArg << " <participant's name{" << defaultParticipantName << "}>]\n"
+        << "  [" << configurationArg << " <path to .silkit.yaml or .json configuration file>]\n"
+        << "  [" << regUriArg << " silkit://<host{localhost}>:<port{8501}>]\n"
+        << "  [" << logLevelArg << " <Trace|Debug|Warn|{Info}|Error|Critical|Off>]\n"
+        << "  [" << endiannessArg << " <big_endian|{little_endian}>]\n"
+        << "\nThe first positional argument is mandatory and must be of the form <host>:<port>,<toAdapterTopic>,<fromAdapterTopic>.\n"
+        << "SIL Kit-specific CLI arguments will be overwritten by the config file passed by "
         << configurationArg << ".\n";
 
     std::cout << "\nExample:\n"
-        "sil-kit-adapter-veipc 192.168.1.3:6666,toSocket,fromSocket " << endiannessArg << " little\n";
+        << "sil-kit-adapter-veipc 192.168.1.3:6666,toSocket,fromSocket " << endiannessArg << " little_endian\n";
 
     if (!userRequested)
         std::cout << "\nPass " << helpArg << " to get this message.\n";
@@ -79,12 +80,12 @@ int main(int argc, char** argv)
         const auto participant = CreateParticipant(argc, argv, logger, &participantName, &lifecycleService, &runningStatePromise);
 
         // Instantiate socket adapters
-        std::vector<std::unique_ptr<bytes_socket::SocketToDatagramPubSubAdapter>> transmitters;
+        std::vector<std::unique_ptr<datagram_socket::SocketToDatagramPubSubAdapter>> transmitters;
         std::set<std::string> alreadyProvidedSockets;
         const uint8_t headerSize = 2; // default typical size field length
         for (auto spec : socketSpecs)
         {
-            transmitters.emplace_back(bytes_socket::SocketToDatagramPubSubAdapter::parseArgument(
+            transmitters.emplace_back(datagram_socket::SocketToDatagramPubSubAdapter::parseArgument(
                 spec, alreadyProvidedSockets, participantName, ioContext, participant.get(), endianness, headerSize, logger));
         }
 
