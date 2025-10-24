@@ -1,3 +1,4 @@
 [submodule "common"]
 	path = common
 	url = git@github1.vg.vector.int:pnd/sil-kit-adapters-common.git
+	branch = SKA-901_socket_to_datagram_pubsub_adapter
