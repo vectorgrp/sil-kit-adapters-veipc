@@ -26,13 +26,13 @@ const std::string adapters::defaultParticipantName = "SilKitAdapterVEIPC";
 void print_help(bool userRequested = false)
 {
     std::cout << "Usage (defaults in curly braces if you omit the switch):" << std::endl
-        << "sil-kit-adapter-veipc <host>:<port>,\n"
-        << util_help::TopicSpecificationHelp()
-        << "  [" << participantNameArg << " <participant's name{" << defaultParticipantName << "}>]\n"
-        << "  [" << configurationArg << " <path to .silkit.yaml or .json configuration file>]\n"
-        << "  [" << regUriArg << " silkit://<host{localhost}>:<port{8501}>]\n"
-        << "  [" << logLevelArg << " <Trace|Debug|Warn|{Info}|Error|Critical|Off>]\n"
-        << "  [" << endiannessArg << " <big_endian|{little_endian}>]\n"
+        << "sil-kit-adapter-veipc" 
+        << util_help::SocketAdapterArgumentHelp("<host>:<port>", "                                     ") << '\n' 
+        << "                      [" << participantNameArg << " <participant's name{" << defaultParticipantName << "}>]\n"
+        << "                      [" << configurationArg << " <path to .silkit.yaml or .json configuration file>]\n"
+        << "                      [" << regUriArg << " silkit://<host{localhost}>:<port{8501}>]\n"
+        << "                      [" << logLevelArg << " <Trace|Debug|Warn|{Info}|Error|Critical|Off>]\n"
+        << "                      [" << endiannessArg << " <big_endian|{little_endian}>]\n"
         << "\nThe first positional argument is mandatory and must be of the form <host>:<port>,<toAdapterTopic>,<fromAdapterTopic>.\n"
         << "SIL Kit-specific CLI arguments will be overwritten by the config file passed by "
         << configurationArg << ".\n";
