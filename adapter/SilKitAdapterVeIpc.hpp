@@ -6,7 +6,6 @@
 
 namespace adapters {
 
-    extern const std::string endiannessArg;
     extern const std::string defaultParticipantName;
 
 }
