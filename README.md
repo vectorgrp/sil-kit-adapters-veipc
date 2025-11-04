@@ -6,7 +6,12 @@ This repository contains instructions to set up development environment and buil
 # Getting Started
 Those instructions assume you use WSL (Ubuntu) or a Linux OS for building and running the adapter (nevertheless it is also possible to do this directly on a Windows system), and use ``bash`` as your interactive shell.
 
-## Getting Started with self-built Adapter
+## a) Getting Started with pre-built Adapter
+Download a preview or release of the adapter directly from [Vector SIL Kit Adapter veIPC Releases](https://github.com/vectorgrp/sil-kit-adapters-veipc/releases).
+
+If not already existent on your system you should also download a SIL Kit Release directly from [Vector SIL Kit Releases](https://github.com/vectorgrp/sil-kit/releases). You will need this for being able to start a sil-kit-registry.
+
+## b) Getting Started with self-built Adapter
 This section specifies steps you should do if you have just cloned the repository.
 
 Before any of those topics, please change your current directory to the top-level in the ``sil-kit-adapters-veipc`` repository:
