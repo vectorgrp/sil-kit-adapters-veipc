@@ -2,6 +2,7 @@
   "version": 4,
   "include": [
     "common/cmake/LinuxPresets.json",
-    "common/cmake/WindowsPresets.json"
+    "common/cmake/WindowsPresets.json",
+    "common/cmake/QnxPresets.json"
   ]
 }

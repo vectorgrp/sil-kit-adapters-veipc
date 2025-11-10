@@ -1,4 +1,7 @@
-cmake_minimum_required(VERSION 3.12)
+# SPDX-FileCopyrightText: Copyright 2025 Vector Informatik GmbH
+# SPDX-License-Identifier: MIT
+	
+cmake_minimum_required(VERSION 3.13)
 project(VectorSilKitAdapterVeIpc)
 
 set(SILKIT_ADAPTER_VEIPC_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")

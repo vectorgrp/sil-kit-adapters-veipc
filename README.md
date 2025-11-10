@@ -1,7 +1,7 @@
 # Vector SIL Kit Adapter veIPC
 This collection of software is provided to illustrate how the [Vector SIL Kit](https://github.com/vectorgrp/sil-kit/) can bridge any socket and transmit veIPC (Vector Module for Interprocessor Communication) messages between it and a pair of SIL Kit Topics.
 
-This repository contains instructions to set up development environment and build the adapter, as well as a simple demo to showcase the functionality.
+This repository contains instructions to set up development environment and build the adapter.
 
 # Getting Started
 Those instructions assume you use WSL (Ubuntu) or a Linux OS for building and running the adapter (nevertheless it is also possible to do this directly on a Windows system), and use ``bash`` as your interactive shell.
@@ -24,10 +24,10 @@ The first thing that you should do is initializing the submodules to fetch the r
     git submodule update --init --recursive
 
 ### Build the Adapter
-To build the adapter and demos, you will need a SIL Kit package ``SilKit-x.y.z-$platform`` for your platform. You can download it directly from [Vector SIL Kit Releases](https://github.com/vectorgrp/sil-kit/releases).
+To build the adapter, you will need a SIL Kit package ``SilKit-x.y.z-$platform`` for your platform. You can download it directly from [Vector SIL Kit Releases](https://github.com/vectorgrp/sil-kit/releases).
 The easiest way would be to download it with your web browser, unzip it and place it on your Windows file system, where it also can be accessed by WSL.
 
-The adapter and demos are built using ``cmake``:
+The adapter is built using ``cmake``:
 
     cmake --preset linux-release -DSILKIT_PACKAGE_DIR=/path/to/SilKit-x.y.z-$platform/ 
     cmake --build --preset linux-release --parallel
@@ -41,7 +41,7 @@ The adapter and demos are built using ``cmake``:
 
 > The Adapter can be cross-compiled to be used in QNX environments. In order to acheive that, you can cross-build the adapter for QNX systems using the provided CMake toolchain files inside the common/cmake folder.
 
-The adapter and demo executables will be available in the ``bin`` directory as well as the ``SilKit.dll`` if you are on Windows. Additionally the ``SilKit.lib`` on Windows and the ``libSilKit.so`` on Linux are automatically copied to the ``lib`` directory.
+The adapter will be available in the ``bin`` directory as well as the ``SilKit.dll`` if you are on Windows. Additionally the ``SilKit.lib`` on Windows and the ``libSilKit.so`` on Linux are automatically copied to the ``lib`` directory.
 
 # Run the sil-kit-adapter-veipc
 This application allows the user to establish a datagram-based connection with a socket in order to bridge it to the SIL Kit:
@@ -81,7 +81,7 @@ Here is an example that runs the veIPC Adapter and demonstrates the basic form o
 
 ## Datagram framing and endianness 
 
-The following scheme guives an overview of the data flow between the peer application's socket, the SIL Kit Adapter veIPC and CANoe.
+The following scheme gives an overview of the data flow between the peer application's socket, the SIL Kit Adapter veIPC and CANoe.
 
                         +------------------+--------------------------+
                         | Payload Length   |     Payload Data         |
