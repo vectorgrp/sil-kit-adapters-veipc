@@ -1,0 +1,33 @@
+# ignore cmake-generated path directories
+build*/
+_build*/
+install*/
+_install*/
+out/
+bin/
+lib/
+**/Downloads/
+
+# ignore IDE directories
+.idea/
+.vs/
+.vscode/
+
+# ignore log files
+*.out
+
+# ignore Vector files
+.vector/
+
+# ignore CANoe-generated files and directories
+*.xpa
+*.vtestreport
+*.stcfg
+*.ini
+**/.run/
+**/Default.venvironment/
+**/working-dir/
+**/*.vtestunit/
+
+# ignore QEMU built image
+**/silkit-qemu-demos-guest.qcow2
