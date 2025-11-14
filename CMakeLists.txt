@@ -32,6 +32,7 @@ install_silkit_lib(
 
 install_adapter(sil-kit-adapter-veipc)
 install_demo(sil-kit-demo-veipc-echo-device)
+install_demo(sil-kit-demo-veipc-auto-sender)
 
 include(common/cmake/Packaging.cmake)
 

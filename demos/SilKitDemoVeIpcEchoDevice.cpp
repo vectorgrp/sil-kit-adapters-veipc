@@ -32,6 +32,18 @@ uint16_t ExtractMessageSize(const uint8_t* header, Endianness endianness)
     }
 }
 
+void PrintMessage(const std::vector<uint8_t>& echoBuffer, uint16_t messageSize)
+{
+    for (size_t i = 0; i < (HEADER_SIZE + messageSize) && i < 64; ++i)
+    {
+        std::cout << std::hex << std::setw(2) << std::setfill('0') 
+                << static_cast<int>(echoBuffer[i]) << " ";
+    }
+    if (messageSize > 64)
+        std::cout << "...";
+    std::cout << std::dec;
+}
+
 void HandleClient(asio::ip::tcp::socket socket, Endianness endianness)
 {
     try
@@ -71,17 +83,14 @@ void HandleClient(asio::ip::tcp::socket socket, Endianness endianness)
                 break;
             }
 
-            std::cout << "[Info] Received " << messageSize << " bytes: ";
-            for (size_t i = 0; i < messageSize && i < 64; ++i)  // print maximum 64 bytes
-            {
-                std::cout << std::hex << std::setw(2) << std::setfill('0') 
-                          << static_cast<int>(echoBuffer[HEADER_SIZE + i]) << " ";
-            }
-            if (messageSize > 64)
-                std::cout << "...";
-            std::cout << std::dec << '\n';
+            std::cout << "[Info] Reading " << HEADER_SIZE + messageSize << " bytes: ";
+            PrintMessage(echoBuffer, messageSize);
+            std::cout << '\n';
 
             // echo back
+            std::cout << "[Info] Writing " << HEADER_SIZE + messageSize << " bytes: ";
+            PrintMessage(echoBuffer, messageSize);
+            std::cout << '\n';
             asio::write(socket, asio::buffer(echoBuffer));
         }
     }
