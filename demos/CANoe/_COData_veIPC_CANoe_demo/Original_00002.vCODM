@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FunctionBusLibrary Version="15" FormatMajorVersion="3" FormatMinorVersion="1" FormatPatchVersion="7">
+  <Namespaces>
+    <Namespace IsDefinedAsHidden="False" IsSystemDefined="False" Name="Namespace">
+      <DOInterfaces>
+        <DOInterface IsAbstract="False" Name="AdapterIf">
+          <AttributeValues>
+            <AttributeValue Definition="_SystemAttributes::Binding" InitialValue="SilKit" InitialValueType="String" />
+          </AttributeValues>
+          <MemberData>
+            <DOMemberDataHolder Name="MemberData" />
+          </MemberData>
+          <DataMembers>
+            <DOIFDataMember Name="toSocket">
+              <DataType DataType="_SystemDataTypes::Bytes" />
+            </DOIFDataMember>
+            <DOIFDataMember LocalDirection="Consumed" Name="fromSocket">
+              <DataType DataType="_SystemDataTypes::Bytes" />
+            </DOIFDataMember>
+          </DataMembers>
+        </DOInterface>
+      </DOInterfaces>
+      <DistributedObjects>
+        <DistributedObject GenerateDotNetAPI="True" Name="Adapter">
+          <DataType>
+            <ModifiedDOIF Reverse="False" IsDOReference="False" Interface="Namespace::AdapterIf" />
+          </DataType>
+          <MemberData>
+            <DOMemberDataHolder Name="MemberData" />
+          </MemberData>
+        </DistributedObject>
+      </DistributedObjects>
+    </Namespace>
+  </Namespaces>
+  <ModuleDependencies>
+    <ModuleDependency Module="SilKit" />
+  </ModuleDependencies>
+</FunctionBusLibrary>
