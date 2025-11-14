@@ -1,0 +1,15 @@
+version 1.4;
+
+import module "SilKit";
+
+namespace Namespace
+{ 
+  [Binding="SilKit"]
+  interface AdapterIf
+  {
+    provided data bytes toSocket;
+    consumed data bytes fromSocket;
+  }
+  
+  object Adapter : AdapterIf;
+}
