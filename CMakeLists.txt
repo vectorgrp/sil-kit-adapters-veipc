@@ -12,12 +12,16 @@ set(SILKIT_ADAPTER_VEIPC_VERSION "0.9.0")
 include(common/cmake/RepoTargets.cmake)
 
 add_subdirectory(adapter)
+add_subdirectory(demos)
 
 include(common/cmake/InstallFunctions.cmake)
 
 fix_windows_install_folder("SIL Kit Adapter veIPC" ${SILKIT_ADAPTER_VEIPC_VERSION})
 
-install_adapter_source(${CMAKE_CURRENT_SOURCE_DIR}/adapter)
+install_adapter_source(
+    ${CMAKE_CURRENT_SOURCE_DIR}/adapter
+    ${CMAKE_CURRENT_SOURCE_DIR}/demos
+)
 install_git_source(${CMAKE_CURRENT_SOURCE_DIR}/common)
 install_root_source_files()
 
@@ -27,6 +31,7 @@ install_silkit_lib(
 )
 
 install_adapter(sil-kit-adapter-veipc)
+install_demo(sil-kit-demo-veipc-echo-device)
 
 include(common/cmake/Packaging.cmake)
 
