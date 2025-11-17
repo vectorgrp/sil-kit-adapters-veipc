@@ -1,0 +1,6 @@
+version: 2.1.0
+test-tree:
+  - test-fixture: EchoServerTestFixture    
+    capl-preparation: PrepareTestscenario
+    elements:
+      - capl-test-case: DO_EchoValueMatch
