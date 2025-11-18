@@ -7,8 +7,8 @@ namespace Namespace
   [Binding="SilKit"]
   interface AdapterIf
   {
-    provided data list<uint8> toSocket;
-    consumed data list<uint8> fromSocket;
+    provided data bytes toSocket;
+    consumed data bytes fromSocket;
   }
   
   object Adapter : AdapterIf;
