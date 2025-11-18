@@ -22,7 +22,7 @@ using namespace adapters;
 using namespace util;
 using namespace SilKit::Services::PubSub;
 
-static constexpr size_t silkitHeaderSize = 4;
+constexpr size_t SILKIT_HEADER_SIZE = 4;
 
 void PrintHelp()
 {
@@ -95,7 +95,7 @@ int main(int argc, char** argv)
         auto dataSubscriber = participant->CreateDataSubscriber(
             participantName + "_sub", subSpec,
             [&](IDataSubscriber* /*subscriber*/, const DataMessageEvent& dataMessageEvent) {
-                std::string bytesStr = PrintBytes(SilKit::Util::ToStdVector(dataMessageEvent.data), silkitHeaderSize);
+                std::string bytesStr = PrintBytes(SilKit::Util::ToStdVector(dataMessageEvent.data), SILKIT_HEADER_SIZE);
                 logger->Info("Adapter >> AutoSender: " + bytesStr);
             });
 
