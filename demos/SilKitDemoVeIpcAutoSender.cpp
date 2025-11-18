@@ -30,7 +30,7 @@ void PrintHelp()
     std::cout << "sil-kit-demo-veipc-auto-sender [--name <participant's name{VeIpcAutoSender}>]\n"
               << "  [--registry-uri silkit://<host{localhost}>:<port{8501}>]\n"
               << "  [--log <Trace|Debug|Warn|{Info}|Error|Critical|Off>]\n"
-              << "  [--payload-size <number of bytes{4}>]\n"
+              << "  [--payload-size <number of bytes>]\n"
               << "\n"
               << "Example:\n"
               << "  sil-kit-demo-veipc-auto-sender --payload-size 8\n";
