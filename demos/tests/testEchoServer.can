@@ -1,0 +1,42 @@
+﻿/*@!Encoding:65001*/
+includes
+{
+  
+}
+
+variables
+{  
+  int result = 0;
+  dword timeout = 2000;
+  byte payloadArray[7] = {1, 12, 55, 41, 89, 23, 67};
+  int payloadArraySize = 7;
+  byte resultPayload[7];
+  int i;
+}
+
+export testfunction PrepareTestscenario()
+{
+  Namespace::Adapter.Connect();
+  resetDistObjValues(Namespace::Adapter);
+
+  memcpy($Namespace::Adapter.toSocket, payloadArray, payloadArraySize);
+}
+
+export testcase DO_EchoValueMatch()
+{
+  result = testWaitForUpdate(Namespace::Adapter.fromSocket,timeout);
+  if (result != 1)
+  {
+    TestStepFail("DO_EchoValueMatch", "FAILED: No message within timeout");
+  }
+  
+  memcpy(resultPayload, $Namespace::Adapter.fromSocket);
+
+  result = memcmp(resultPayload, payloadArray, payloadArraySize);
+  if (result != 0)
+  {
+    TestStepFail("DO_EchoValueMatch", "FAILED: Bytes received do not match sent bytes");
+  }
+  TestStepPass("DO_EchoValueMatch", "SUCCESS");
+  
+}
