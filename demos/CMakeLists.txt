@@ -10,7 +10,7 @@ target_link_libraries(sil-kit-demo-veipc-echo-device
 )
 
 set_target_properties(sil-kit-demo-veipc-echo-device 
-	PROPERTIES
+    PROPERTIES
         #ensure SilKit shared libraries can be loaded
         INSTALL_RPATH "$ORIGIN/../lib:$ORIGIN"
         BUILD_RPATH "$ORIGIN"
@@ -26,7 +26,7 @@ target_link_libraries(sil-kit-demo-veipc-auto-sender
 )
 
 set_target_properties(sil-kit-demo-veipc-auto-sender 
-	PROPERTIES
+    PROPERTIES
         #ensure SilKit shared libraries can be loaded
         INSTALL_RPATH "$ORIGIN/../lib:$ORIGIN"
         BUILD_RPATH "$ORIGIN"

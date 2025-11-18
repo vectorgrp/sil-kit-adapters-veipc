@@ -109,3 +109,8 @@ Flow:
 The adapter treats each datagram as a framed payload with a size field at the beginning. The `--endianness` argument controls how multi-byte numeric fields are interpreted when converting between the raw socket data and SIL Kit payloads.
 
 **Important:** Choose `--endianness` to match what the peer application (the process on the other end of the socket) expects for the length header. If they differ, the peer will misinterpret frame sizes and behavior becomes undefined (truncated, merged, or discarded PDUs).
+
+## veIPC Echo Device Demo
+The aim of this demo is to showcase a simple echo device that receives framed datagrams over a TCP socket and echoes the data back. Each message consists of a 2-byte length header followed by the payload data.
+
+This demo is further explained in [demos/README.md](demos/README.md).
