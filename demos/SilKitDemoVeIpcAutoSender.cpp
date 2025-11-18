@@ -72,16 +72,9 @@ int main(int argc, char** argv)
     const std::string participantName = getArgDefault(argc, argv, participantNameArg, "VeIpcAutoSender");
     const std::string registryUri = getArgDefault(argc, argv, regUriArg, "silkit://localhost:8501");
     const std::string loglevel = getArgDefault(argc, argv, logLevelArg, "Info");
-    const size_t payloadSize = std::stoul(getArgDefault(argc, argv, "--payload-size", "4"));
 
     const std::string publishTopic = "toSocket";
     const std::string subscribeTopic = "fromSocket";
-
-    if (payloadSize == 0 || payloadSize > std::numeric_limits<uint16_t>::max())
-    {
-        std::cerr << "[Error] Payload size must be between 1 and " << std::numeric_limits<uint16_t>::max() << " bytes" << std::endl;
-        return CodeErrorOther;
-    }
 
     try
     {
@@ -106,7 +99,28 @@ int main(int argc, char** argv)
                 logger->Info("Adapter >> AutoSender: " + bytesStr);
             });
 
-        logger->Info("Starting to send random " + std::to_string(payloadSize) + "-byte payloads every 2 seconds...");
+        // handle payload size argument
+        size_t payloadSize = 1;  // default starting size
+        bool autoIncrement = true;
+
+        if (findArg(argc, argv, "--payload-size", argv) != NULL)
+        {
+            payloadSize = std::stoul(*findArgOf(argc, argv, "--payload-size", argv));
+            autoIncrement = false;
+
+            if (payloadSize == 0 || payloadSize > std::numeric_limits<uint16_t>::max())
+            {
+                logger->Error("Payload size must be between 1 and " + std::to_string(std::numeric_limits<uint16_t>::max()) + " bytes");
+                return CodeErrorOther;
+            }
+            logger->Info("Payload size set to " + std::to_string(payloadSize) + " bytes");
+            logger->Info("Starting to send random " + std::to_string(payloadSize) + "-byte payloads every 2 seconds...");
+        }
+        else
+        {
+            logger->Info("--payload-size option not set, using auto-increment mode starting from 1 byte");
+        }
+
         logger->Info("Press CTRL + C to stop the process...");
 
         // delay for SIL Kit environment setup
@@ -125,6 +139,19 @@ int main(int argc, char** argv)
             dataPublisher->Publish(serializer.ReleaseBuffer());
 
             std::this_thread::sleep_for(std::chrono::seconds(2));
+
+            if (autoIncrement)
+            {
+                if (payloadSize < std::numeric_limits<uint16_t>::max())
+                {
+                    payloadSize++;
+                }
+                else
+                {
+                    logger->Info("Reached max payload size, stopping demo");
+                    return CodeSuccess;
+                }
+            }
         }
     }
     catch (const SilKit::ConfigurationError& error)

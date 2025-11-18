@@ -39,7 +39,7 @@ void print_help(bool userRequested = false)
         << configurationArg << ".\n";
 
     std::cout << "\nExample:\n"
-        << "sil-kit-adapter-veipc 192.168.1.3:6666,toSocket,fromSocket " << endiannessArg << " little_endian\n";
+        << "sil-kit-adapter-veipc localhost:6666,toSocket,fromSocket " << endiannessArg << " little_endian\n";
 
     if (!userRequested)
         std::cout << "\nPass " << helpArg << " to get this message.\n";
