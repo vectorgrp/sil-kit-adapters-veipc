@@ -17,7 +17,10 @@ include(common/cmake/InstallFunctions.cmake)
 
 fix_windows_install_folder("SIL Kit Adapter veIPC" ${SILKIT_ADAPTER_VEIPC_VERSION})
 
-install_adapter_source(${CMAKE_CURRENT_SOURCE_DIR}/adapter)
+install_adapter_source(
+    ${CMAKE_CURRENT_SOURCE_DIR}/adapter
+    ${CMAKE_CURRENT_SOURCE_DIR}/demos
+)
 install_git_source(${CMAKE_CURRENT_SOURCE_DIR}/common)
 install_root_source_files()
 
