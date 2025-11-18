@@ -38,5 +38,4 @@ export testcase DO_EchoValueMatch()
     TestStepFail("DO_EchoValueMatch", "FAILED: Bytes received do not match sent bytes");
   }
   TestStepPass("DO_EchoValueMatch", "SUCCESS");
-  
 }
