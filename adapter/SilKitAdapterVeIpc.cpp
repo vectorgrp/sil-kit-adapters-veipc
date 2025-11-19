@@ -26,6 +26,7 @@ const std::string adapters::defaultParticipantName = "SilKitAdapterVeIpc";
 
 void print_help(bool userRequested = false)
 {
+    // clang-format off
     std::cout << "Usage (defaults in curly braces if you omit the switch):" << std::endl
         << "sil-kit-adapter-veipc" 
         << help::SocketAdapterArgumentHelp("<host>:<port>", "                                     ") << '\n' 
@@ -43,6 +44,7 @@ void print_help(bool userRequested = false)
 
     if (!userRequested)
         std::cout << "\nPass " << helpArg << " to get this message.\n";
+    // clang-format on
 };
 
 int main(int argc, char** argv)
@@ -63,12 +65,14 @@ int main(int argc, char** argv)
             endianness = Endianness::big_endian;
         else if (endiannessStr != "little_endian")
         {
-            std::cerr << "Invalid endianness value '" << endiannessStr << "'. Expected 'big_endian' or 'little_endian'." << std::endl;
+            std::cerr << "Invalid endianness value '" << endiannessStr << "'. Expected 'big_endian' or 'little_endian'."
+                      << std::endl;
             throw InvalidCli();
         }
 
-        const std::array<const std::string*,5> switchesWithArg = { &endiannessArg, &regUriArg, &logLevelArg, &participantNameArg, &configurationArg };
-        const std::array<const std::string*,1> switchesWithoutArg = { &helpArg };
+        const std::array<const std::string*, 5> switchesWithArg = {&endiannessArg, &regUriArg, &logLevelArg,
+                                                                   &participantNameArg, &configurationArg};
+        const std::array<const std::string*, 1> switchesWithoutArg = {&helpArg};
 
         // Collect positional socket specifications
         auto socketSpecs = adapters::CollectPositionalSocketArgs(argc, argv, switchesWithArg, switchesWithoutArg);
@@ -80,7 +84,8 @@ int main(int argc, char** argv)
         std::string participantName = defaultParticipantName;
         static constexpr uint8_t headerSize = 2; // default typical size field length
 
-        const auto participant = CreateParticipant(argc, argv, logger, &participantName, &lifecycleService, &runningStatePromise);
+        const auto participant =
+            CreateParticipant(argc, argv, logger, &participantName, &lifecycleService, &runningStatePromise);
 
         // Instantiate socket adapters
         std::vector<std::unique_ptr<SocketToDatagramPubSubAdapter>> transmitters;
@@ -88,8 +93,9 @@ int main(int argc, char** argv)
         transmitters.reserve(socketSpecs.size());
         for (auto spec : socketSpecs)
         {
-            transmitters.emplace_back(SocketToDatagramPubSubAdapter::parseArgument(
-                spec, alreadyProvidedSockets, participantName, ioContext, participant.get(), endianness, headerSize, logger));
+            transmitters.emplace_back(
+                SocketToDatagramPubSubAdapter::parseArgument(spec, alreadyProvidedSockets, participantName, ioContext,
+                                                             participant.get(), endianness, headerSize, logger));
         }
 
         auto finalStateFuture = lifecycleService->StartLifecycle();
