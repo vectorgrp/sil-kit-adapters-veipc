@@ -41,13 +41,6 @@ remote_capture() {
   sshpass -e ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "$SSH_USER@$SSH_HOST" "$cmd"
 }
 
-copy_to_remote() {
-  # Usage: copy_to_remote source_file dest_path
-  local src="$1"; local dest="$2"
-  echo "[remote] copy $src -> $SSH_USER@$SSH_HOST:$dest"
-  sshpass -e scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "$src" "$SSH_USER@$SSH_HOST:$dest"
-}
-
 kill_remote_app() {
   # Usage: kill_remote_app <process_name>
   local target_name="$1"
