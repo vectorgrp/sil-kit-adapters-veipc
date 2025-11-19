@@ -7,6 +7,6 @@
 
 namespace adapters {
 
-    extern const std::string defaultParticipantName;
+extern const std::string defaultParticipantName;
 
 }
