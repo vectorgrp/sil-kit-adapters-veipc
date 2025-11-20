@@ -142,14 +142,13 @@ int main(int argc, char** argv)
 
             if (autoIncrement)
             {
-                if (payloadSize < std::numeric_limits<uint16_t>::max())
+                if (payloadSize < 10)
                 {
                     payloadSize++;
                 }
                 else
                 {
-                    logger->Info("Reached max payload size, stopping demo");
-                    return CodeSuccess;
+                    payloadSize = 1; // reset to 1 byte after reaching 10 bytes
                 }
             }
         }
