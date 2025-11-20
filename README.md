@@ -1,9 +1,9 @@
 # Vector SIL Kit Adapter veIPC
 This collection of software is provided to illustrate how the [Vector SIL Kit](https://github.com/vectorgrp/sil-kit/) can be attached to a socket provided by the Vector MICROSAR Adaptive veIPC (Vector Module for Interprocessor Communication) component. For more information regarding this component please refer to [MICROSAR Adaptive Product Information](https://www.vector.com/us/en/download/microsar-adaptive-product-information/) and the chapters regarding External Communication (Ext.Com) inside this document.
  
-This repository contains instructions to create, set up, and launch such a minimal setup.
- 
 The main contents are working examples of necessary software to connect the running system to a SIL Kit environment, as well as complementary demo (only a mockup of the veIPC component) application for some communication to happen. The setup showcased is based on message oriented communication via SIL Kit Publish and Subscribe topics.
+
+This repository contains instructions to create, set up, and launch such a minimal setup.
 
 # Getting Started
 Those instructions assume you use WSL (Ubuntu) or a Linux OS for building and running the adapter (nevertheless it is also possible to do this directly on a Windows system), and use ``bash`` as your interactive shell.
