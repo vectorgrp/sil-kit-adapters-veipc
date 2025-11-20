@@ -1,19 +1,16 @@
 # VeIPC Echo Device Demo
 
-This demo application allows the user to test the SIL Kit Adapter veIPC by creating a TCP server that acts as an echo device. The echo device receives framed messages over a socket connection and echoes them back.
+The aim of this demo is to showcase how the SIL Kit Adapter veIPC can be used together with an application that acts as a mockup for the actual MICROSAR Adaptive component for veIPC communication. This mockup provides a TCP socket, the SIL Kit Adapter veIPC can connect to and it receives framed datagrams over this TCP socket connection and echoes the data back.
 
-The demo uses a *socket* backend with a framed message protocol.
-Each message consists of a 2-byte length header followed by the payload data:
+The communication between the SIL Kit Adapter veIPC and the mockup application happens with framed message protocol (as with the actual MICROSAR Adaptive component). Each message consists of a 2-byte length header followed by the payload data.
 
-```
-[2-byte header (payload length)] [payload data]
-```
+There is also an additional SIL Kit participant which generates random messages for this already explained setup.
 
 The echo device listens on TCP port 6666 by default and can be configured for different endianness modes: `little_endian` and `big_endian`.
 
 ## Demo Common Steps
 
-Before running any demo, you need to setup the SIL Kit environment:
+Before running any demo, you need to setup the SIL Kit registry:
 
 ```
 /path/to/SilKit-x.y.z-$platform/SilKit/bin/sil-kit-registry --listen-uri 'silkit://0.0.0.0:8501'
@@ -63,31 +60,42 @@ The `sil-kit-demo-veipc-auto-sender` application is a SIL Kit participant that a
    [date time] [VeIpcAutoSender] [info] Adapter >> AutoSender: 5d c2 89 04 f1 3a 6e 77
    ...
 ```
-> The --payload-size argument is optional. When omitted, the sender will automatically generate random payloads starting at 1 byte and incrementing by 1 byte every two seconds.
+> The --payload-size argument is optional. When omitted, the sender will automatically generate random payloads starting at 1 byte and incrementing by 1 byte every two seconds until 10 bytes, then restarting at 1 byte.
 > The topics are hardcoded to `toSocket` (publish) and `fromSocket` (subscribe).
 
 In the following diagram you can see the whole setup. It illustrates the data flow going through each component involved.
 ```
-                                     SIL Kit topics:
-
-                                     > fromSocket >
-                                   ------------------
-     +------[SIL Kit]------+      /                  \      +-----------------+
-     | SilKitAdapterVeIpc  |------                    ------| VeIpcAutoSender |
-     +---------------------+      \                  /      +-----------------+
-              |                    ------------------
-        < socket 6666 >              <  toSocket  <
-              |
-     +----[TCP Server]----+
-     |  VeIpcEchoDevice   |
-     +--------------------+
+                          +------------------+--------------------------+
+                          | Payload Length   |     Payload Data         |
+                          |     (2 bytes)    |    (variable size)       |
+                          +------------------+--------------------------+
+                                                   \
+                                                    \  
+    +--[ VeIpcEchoDevice ]--+--[Socket]--+           )            +--[ SIL Kit Adapter veIPC ]--+
+    |                       |  < 6666 >  |< -------------------- >|                             |          
+    +-----------------------+------------+                        +-----------------------------+       
+                                                                                ^
+                                                                                | _          +--------------------+
+                                                                                |  \ _______ |    Payload Data    |
+                                           SIL Kit topics:                      |            |   (variable size)  |
+                                                                                |            +--------------------+                  
+    +--[ VeIpcAutoSender ]--+               > toSocket >                        v                      
+    |                       |----        ------------------       +-----[ SIL Kit Registry ]-----+                                   
+    +-----------------------+    |      /                  \      |                              |                                                      
+                                 |------                    ------|                              |           
+    +----[ Vector CANoe ]---+    |      \                  /      |                              |
+    |                       |----        ------------------       |                              |
+    +-----------------------+             < fromSocket <          +------------------------------+
 ```
 
-## Adding CANoe (19 SP2 or newer) as a participant
+## Adding CANoe (19 SP3 or newer) as a participant
 Before you can connect CANoe to the SIL Kit network you should adapt the ``RegistryUri`` in ``./demos/SilKitConfig_CANoe.silkit.yaml`` to the IP address of your system where your sil-kit-registry is running.
 
 ### CANoe Desktop Edition
-Load the ``veIPC_CANoe_demo.cfg`` from the ``./demos/CANoe`` directory. After starting the demo, the current file states appears in the *Data Window*. Then you can see the files update in this *Data Window*, and you can send data to the socket through the *Application Panel*. Optionally you can also start the test unit execution of included test configuration. While the demo server is running the test should be successful. It sends some bytes through the *toSocket* topic, then receives them on the *fromSocket* one.
+Load the ``veIPC_CANoe_demo.cfg`` from the ``./demos/CANoe`` directory. After starting the demo, the current payload appears in the *Data Window*. Then you can see the payload being updated in this *Data Window*, and you can send data to the socket through the *Symbol Panel*:
+![CHANGE_PAYLOAD](images/updating_payload_screenshot.png)
+
+Before doing this it makes sense to stop the *AutoSender* application first. Optionally you can also start the test unit execution of included test configuration. While the demo server is running the test should be successful. It sends some bytes through the *toSocket* topic, then receives them on the *fromSocket* one.
 
 ## Using the SIL Kit Dashboard
 
