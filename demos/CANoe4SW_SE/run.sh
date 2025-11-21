@@ -4,6 +4,11 @@
 
 script_root=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
+CANOE_DIR_PROVIDED=0
+if [[ -n "$canoe4sw_se_install_dir" ]]; then
+  CANOE_DIR_PROVIDED=1
+fi
+
 if [[ -z "$canoe4sw_se_install_dir" ]]; then
   default_canoe4sw_se_install_dir="/opt/vector/canoe-server-edition"
   if [[ -x "$default_canoe4sw_se_install_dir/canoe4sw-se" ]]; then
@@ -19,10 +24,14 @@ fi
 #display used canoe4sw-se version
 $canoe4sw_se_install_dir/canoe4sw-se --version
 
-"$script_root/createEnvironment.sh"
-if [[ $? -ne 0 ]]; then
-  echo "[error] createEnvironment.sh failed"
-  exit 1
+if [[ $CANOE_DIR_PROVIDED -eq 0 ]]; then
+  "$script_root/createEnvironment.sh"
+  if [[ $? -ne 0 ]]; then
+    echo "[error] createEnvironment.sh failed"
+    exit 1
+  fi
+else
+  echo "[info] canoe4sw_se_install_dir provided externally; skipping createEnvironment.sh"
 fi
 
 #run test unit
