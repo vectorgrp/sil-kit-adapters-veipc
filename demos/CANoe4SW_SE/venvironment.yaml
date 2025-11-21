@@ -1,4 +1,4 @@
-version: 4.0.0
+version: 4.2.0
 
 global-settings:
   working-mode:
@@ -10,6 +10,4 @@ sil-kit:
   config-file-path: ../CANoe/SilKitConfig_CANoe.silkit.yaml
 
 datasources:
-- file-path: /home/dev/vfs/sil-kit-adapters-veipc/demos/CANoe/veIPC_CANoe_demo.vCDL
-
-      
+- file-path: ../CANoe/veIPC_CANoe_demo.vcdl

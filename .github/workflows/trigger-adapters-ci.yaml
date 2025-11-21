@@ -1,6 +1,10 @@
 name: trigger sil-kit-adapters-ci
 on:
   workflow_dispatch:
+    inputs:
+      branch_under_test:
+          required: false
+          type: string
   workflow_call:
     inputs:
       common_repo_commit:

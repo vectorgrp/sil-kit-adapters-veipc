@@ -16,7 +16,7 @@ scriptDir="$(dirname "$(realpath "$0")")"
 
 # ssh related
 SSH_USER="root"
-SSH_HOST="192.168.1.3"     # change to 127.0.0.1 if using hostfwd=::22-:22echo ssh 
+SSH_HOST="192.168.1.3"
 DELAY_SECONDS=5
 export SSHPASS="root"  
 

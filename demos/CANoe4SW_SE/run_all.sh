@@ -63,7 +63,7 @@ cleanup_adapter() {
     if kill -0 "$ADAPTER_PID" 2>/dev/null; then
       kill -TERM "$ADAPTER_PID" 2>/dev/null || true
     else
-      echo "[info] Adapter already exited"
+      echo "[info] Adapter already exited."
     fi
   fi
 }

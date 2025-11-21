@@ -12,11 +12,14 @@ Set-StrictMode -Version 3
 #get folder of CANoe4SW Server Edition
 $canoe4sw_se_install_dir = $env:CANoe4SWSE_InstallDir64
 
+#display version 
+& $canoe4sw_se_install_dir/canoe4sw-se.exe --version
+
 #create environment
 & $canoe4sw_se_install_dir/environment-make.exe "$PSScriptRoot/venvironment.yaml"  -o "$PSScriptRoot" -A "Linux64"
 
 #compile test unit
-& $canoe4sw_se_install_dir/test-unit-make.exe "$PSScriptRoot/../tests/testEchoServer.vtestunit.vtestunit.yaml" -e "$PSScriptRoot/Default.venvironment" -o "$PSScriptRoot"
+& $canoe4sw_se_install_dir/test-unit-make.exe "$PSScriptRoot/../tests/testEchoServer.vtestunit.yaml" -e "$PSScriptRoot/Default.venvironment" -o "$PSScriptRoot"
 
 $ipv4Pattern = '^(?:(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(?!$)|$)){4}$' # regex that matches an IPv4 addresses
 
