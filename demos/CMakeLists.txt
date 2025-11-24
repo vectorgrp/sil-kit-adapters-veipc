@@ -1,15 +1,15 @@
 # SPDX-FileCopyrightText: Copyright 2025 Vector Informatik GmbH
 # SPDX-License-Identifier: MIT
 
-add_executable(sil-kit-demo-veipc-echo-device SilKitDemoVeIpcEchoDevice.cpp)
+add_executable(sil-kit-demo-veipc-echo-server SilKitDemoVeIpcEchoServer.cpp)
 
-target_link_libraries(sil-kit-demo-veipc-echo-device
+target_link_libraries(sil-kit-demo-veipc-echo-server
     PRIVATE
         asio
         sil-kit-adapters-common
 )
 
-set_target_properties(sil-kit-demo-veipc-echo-device 
+set_target_properties(sil-kit-demo-veipc-echo-server 
     PROPERTIES
         #ensure SilKit shared libraries can be loaded
         INSTALL_RPATH "$ORIGIN/../lib:$ORIGIN"

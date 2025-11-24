@@ -1,4 +1,4 @@
-# VeIPC Echo Device Demo
+# VeIPC Echo Server Demo
 
 The aim of this demo is to showcase how the SIL Kit Adapter veIPC can be used together with an application that acts as a mockup for the actual MICROSAR Adaptive component for veIPC communication. This mockup provides a TCP socket, the SIL Kit Adapter veIPC can connect to and it receives framed datagrams over this TCP socket connection and echoes the data back.
 
@@ -6,7 +6,7 @@ The communication between the SIL Kit Adapter veIPC and the mockup application h
 
 There is also an additional SIL Kit participant which generates random messages for this already explained setup.
 
-The echo device listens on TCP port 6666 by default and can be configured for different endianness modes: `little_endian` and `big_endian`.
+The echo server listens on TCP port 6666 by default and can be configured for different endianness modes: `little_endian` and `big_endian`.
 
 ## Demo Common Steps
 
@@ -18,17 +18,17 @@ Before running any demo, you need to setup the SIL Kit registry:
 
 ## Basic Echo Demo
 
-First launch the echo device server, which will listen for incoming socket connections:
+First launch the echo server, which will listen for incoming socket connections:
 
 ```
-./bin/sil-kit-demo-veipc-echo-device --endianness little_endian
+./bin/sil-kit-demo-veipc-echo-server --endianness little_endian
 [Info] Using little_endian for header size
 [Info] Server listening on 0.0.0.0:6666
 ```
 
 > The server always binds to `0.0.0.0:6666`. This is hardcoded and cannot be changed via command line.
 
-Then, launch the adapter in a separate terminal, which connects to the registry (to connect to other participants) and to the echo device to transmit data:
+Then, launch the adapter in a separate terminal, which connects to the registry (to connect to other participants) and to the echo server to transmit data:
 
 ```
 ./bin/sil-kit-adapter-veipc localhost:6666,toSocket,fromSocket --endianness little_endian
@@ -38,7 +38,7 @@ Then, launch the adapter in a separate terminal, which connects to the registry 
 Press CTRL + C to stop the process...
 ```
 
-You should see the echo device accepting the connection:
+You should see the echo server accepting the connection:
 
 ```
 [Info] Client connected
@@ -71,7 +71,7 @@ In the following diagram you can see the whole setup. It illustrates the data fl
                           +------------------+--------------------------+
                                                    \
                                                     \  
-    +--[ VeIpcEchoDevice ]--+--[Socket]--+           )            +--[ SIL Kit Adapter veIPC ]--+
+    +--[ VeIpcEchoServer ]--+--[Socket]--+           )            +--[ SIL Kit Adapter veIPC ]--+
     |                       |  < 6666 >  |< -------------------- >|                             |          
     +-----------------------+------------+                        +-----------------------------+       
                                                                                 ^

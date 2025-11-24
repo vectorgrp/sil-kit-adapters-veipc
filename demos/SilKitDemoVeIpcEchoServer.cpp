@@ -34,6 +34,7 @@ uint16_t ExtractMessageSize(const uint8_t* header, Endianness endianness)
 
 void PrintMessage(const std::vector<uint8_t>& echoBuffer, uint16_t messageSize)
 {
+    // print up to 64 bytes to keep the output clean
     for (size_t i = 0; i < (HEADER_SIZE + messageSize) && i < 64; ++i)
     {
         std::cout << std::hex << std::setw(2) << std::setfill('0') 
