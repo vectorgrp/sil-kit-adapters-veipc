@@ -1,7 +1,9 @@
 # Vector SIL Kit Adapter veIPC
-This collection of software is provided to illustrate how the [Vector SIL Kit](https://github.com/vectorgrp/sil-kit/) can bridge any socket and transmit veIPC (Vector Module for Interprocessor Communication) messages between it and a pair of SIL Kit Topics.
+This collection of software is provided to illustrate how the [Vector SIL Kit](https://github.com/vectorgrp/sil-kit/) can be attached to a socket provided by the Vector MICROSAR Adaptive veIPC (Vector Module for Interprocessor Communication) component. For more information regarding this component please refer to [MICROSAR Adaptive Product Information](https://www.vector.com/us/en/download/microsar-adaptive-product-information/) and the chapters regarding External Communication (Ext.Com) inside this document.
+ 
+The main contents are working examples of necessary software to connect the running system to a SIL Kit environment, as well as complementary demo (only a mockup of the veIPC component) application for some communication to happen. The setup showcased is based on message oriented communication via SIL Kit Publish and Subscribe topics.
 
-This repository contains instructions to set up development environment and build the adapter.
+This repository contains instructions to create, set up, and launch such a minimal setup.
 
 # Getting Started
 Those instructions assume you use WSL (Ubuntu) or a Linux OS for building and running the adapter (nevertheless it is also possible to do this directly on a Windows system), and use ``bash`` as your interactive shell.
@@ -109,3 +111,8 @@ Flow:
 The adapter treats each datagram as a framed payload with a size field at the beginning. The `--endianness` argument controls how multi-byte numeric fields are interpreted when converting between the raw socket data and SIL Kit payloads.
 
 **Important:** Choose `--endianness` to match what the peer application (the process on the other end of the socket) expects for the length header. If they differ, the peer will misinterpret frame sizes and behavior becomes undefined (truncated, merged, or discarded PDUs).
+
+## veIPC Echo Server Demo
+The aim of this demo is to showcase how the SIL Kit Adapter veIPC can be used together with an application that acts as a mockup for the actual MICROSAR Adaptive component for veIPC communication. This mockup provides a TCP socket, the SIL Kit Adapter veIPC can connect to and it receives framed datagrams over this TCP socket connection and echoes the data back.
+
+This demo is further explained in [demos/README.md](demos/README.md).
