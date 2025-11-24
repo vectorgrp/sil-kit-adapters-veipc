@@ -12,6 +12,7 @@ set(SILKIT_ADAPTER_VEIPC_VERSION "0.9.0")
 include(common/cmake/RepoTargets.cmake)
 
 add_subdirectory(adapter)
+add_subdirectory(demos)
 
 include(common/cmake/InstallFunctions.cmake)
 
@@ -30,6 +31,8 @@ install_silkit_lib(
 )
 
 install_adapter(sil-kit-adapter-veipc)
+install_demo(sil-kit-demo-veipc-echo-server)
+install_demo(sil-kit-demo-veipc-auto-sender)
 
 include(common/cmake/Packaging.cmake)
 

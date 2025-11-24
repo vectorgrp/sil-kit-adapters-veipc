@@ -1,0 +1,8 @@
+version: 2.1.0
+
+test-unit-information:
+  description: This test unit tests the basic functionality of the veIPC adapter with echo server device.
+  
+test-unit-implementation:
+  - source-file-path: testEchoServer.can
+  - source-file-path: testEchoServer.vtesttree.yaml

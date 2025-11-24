@@ -111,3 +111,8 @@ Flow:
 The adapter treats each datagram as a framed payload with a size field at the beginning. The `--endianness` argument controls how multi-byte numeric fields are interpreted when converting between the raw socket data and SIL Kit payloads.
 
 **Important:** Choose `--endianness` to match what the peer application (the process on the other end of the socket) expects for the length header. If they differ, the peer will misinterpret frame sizes and behavior becomes undefined (truncated, merged, or discarded PDUs).
+
+## veIPC Echo Server Demo
+The aim of this demo is to showcase how the SIL Kit Adapter veIPC can be used together with an application that acts as a mockup for the actual MICROSAR Adaptive component for veIPC communication. This mockup provides a TCP socket, the SIL Kit Adapter veIPC can connect to and it receives framed datagrams over this TCP socket connection and echoes the data back.
+
+This demo is further explained in [demos/README.md](demos/README.md).
