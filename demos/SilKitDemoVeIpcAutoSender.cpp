@@ -113,8 +113,8 @@ int main(int argc, char** argv)
                 logger->Error("Payload size must be between 1 and " + std::to_string(std::numeric_limits<uint16_t>::max()) + " bytes");
                 return CodeErrorOther;
             }
-            logger->Info("Payload size set to " + std::to_string(payloadSize) + " bytes");
-            logger->Info("Starting to send random " + std::to_string(payloadSize) + "-byte payloads every 2 seconds...");
+            logger->Info("Payload size set to " + std::to_string(payloadSize) + " byte(s)");
+            logger->Info("Starting to send random " + std::to_string(payloadSize) + " byte(s) payload every 2 seconds...");
         }
         else
         {

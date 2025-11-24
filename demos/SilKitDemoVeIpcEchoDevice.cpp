@@ -147,7 +147,7 @@ int main(int argc, char** argv)
 
         std::cout << "[Info] Server listening on " << DEFAULT_ADDRESS << ":" << DEFAULT_PORT << '\n';
 
-        // waits the client to connect
+        // waits for the client to connect
         asio::ip::tcp::socket socket(io);
         acceptor.accept(socket);
         std::cout << "[Info] Client connected" << '\n';
