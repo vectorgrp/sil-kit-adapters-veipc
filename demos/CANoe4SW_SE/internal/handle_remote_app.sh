@@ -69,7 +69,12 @@ kill_remote_app() {
 
 start_remote_app() {
   local endian="$1"
-  remote_exec "Updating endianness configuration to: ($endian)" "sed -ri 's/\"endianness\":[[:space:]]*\"(little|big)_endian\"/\"endianness\": \"$endian\"/' '/data/home/amsr_externalipc_vtt_example/etc/xipc_vtt_config.json'"
+
+  if [ "$endian" = "little_endian" ]; then
+    remote_exec "Updating endianness configuration to: (little_endian)" "sed -ri 's/\"endianness\":[[:space:]]*\"(little|big)_endian\"/\"endianness\": \"little_endian\"/' /data/home/amsr_externalipc_vtt_example/etc/xipc_vtt_config.json"
+  else
+    remote_exec "Updating endianness configuration to: (big_endian)" "sed -ri 's/\"endianness\":[[:space:]]*\"(little|big)_endian\"/\"endianness\": \"big_endian\"/' /data/home/amsr_externalipc_vtt_example/etc/xipc_vtt_config.json"
+  fi
   remote_exec "Launching remote server application ($endian)" "$REMOTE_START_CMD" || echo "[warn] Remote start command returned non-zero"
   echo "[info] Sleeping ${DELAY_SECONDS}s to let remote server application start..."
   sleep "$DELAY_SECONDS"
@@ -80,13 +85,16 @@ case "$ACTION" in
   kill)
     target="${2:-$REMOTE_PROCESS_NAME}"
     kill_remote_app "$target"
-    exit 
+    exit 0
     ;;
   start_little_endian)
     start_remote_app "little_endian"
     ;;
   start_big_endian)
     start_remote_app "big_endian"
+    ;;
+  init_config_file)
+    remote_exec "[info] Initialising remote app configuration file" "sed -ri '/\"channel_id\"[[:space:]]*:[[:space:]]*1/,/}/ s/\"address\":[[:space:]]*\"([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)\"/\"address\": \"192.168.1.2\"/' /data/home/amsr_externalipc_vtt_example/etc/xipc_vtt_config.json"
     ;;
   *)
     echo "[error] Unknown or missing action: $ACTION"

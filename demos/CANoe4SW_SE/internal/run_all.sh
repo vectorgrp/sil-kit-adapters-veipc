@@ -8,26 +8,6 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
-echo "[info] Locating canoe4sw-se installation directory"
-default_canoe4sw_se_install_dir="/opt/vector/canoe-server-edition"
-# Check if the executable exists at the default path
-if [[ -x "$default_canoe4sw_se_install_dir/canoe4sw-se" ]]; then
-  canoe4sw_se_install_dir="$default_canoe4sw_se_install_dir"
-else
-  # If not found at the default path, search for the executable
-  canoe4sw_se_install_dir=$(dirname $(find / -name canoe4sw-se -type f -executable -print -quit 2>/dev/null))
-fi
-
-if [[ -n "$canoe4sw_se_install_dir" ]]; then
-	echo "[info] canoe4sw-se found at location: $canoe4sw_se_install_dir"
-	$canoe4sw_se_install_dir/canoe4sw-se --version
-else
-  echo "[error] canoe4sw-se executable not found"
-  exit 1
-fi
-
-export canoe4sw_se_install_dir
-
 scriptDir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 silKitDir=/home/dev/vfs/SILKit/SilKit-5.0.1-ubuntu-22.04-x86_64-gcc/
 # if "exported_full_path_to_silkit" environment variable is set (in pipeline script), use it. Otherwise, use default value
@@ -122,6 +102,8 @@ echo "[info] QEMU started; active PID: $(get_qemu_pid)"
 echo "[info] Sleeping ${DELAY_SECONDS}s to let SSH service start..."
 sleep "$DELAY_SECONDS"
 
+echo "[info] Requesting remote app configuration file update"
+"$HANDLE_REMOTE_APP" init_config_file || { echo "[error] remote-init_config_file failed"; exit 1; }
 #### TEST LITTLE_ENDIAN #### 
 #### start remote application (little_endian)
 echo "[info] Invoking remote-start (start_little_endian)"

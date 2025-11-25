@@ -1,39 +1,27 @@
 #!/bin/bash
 # SPDX-FileCopyrightText: Copyright 2025 Vector Informatik GmbH
 # SPDX-License-Identifier: MIT
-
 script_root=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-CANOE_DIR_PROVIDED=0
+default_canoe4sw_se_install_dir="/opt/vector/canoe-server-edition"
+# Check if the executable exists at the default path
+if [[ -x "$default_canoe4sw_se_install_dir/canoe4sw-se" ]]; then
+  canoe4sw_se_install_dir="$default_canoe4sw_se_install_dir"
+else
+  # If not found at the default path, search for the executable
+  canoe4sw_se_install_dir=$(dirname $(find / -name canoe4sw-se -type f -executable -print -quit 2>/dev/null))
+fi
+
 if [[ -n "$canoe4sw_se_install_dir" ]]; then
-  CANOE_DIR_PROVIDED=1
-fi
-
-if [[ -z "$canoe4sw_se_install_dir" ]]; then
-  default_canoe4sw_se_install_dir="/opt/vector/canoe-server-edition"
-  if [[ -x "$default_canoe4sw_se_install_dir/canoe4sw-se" ]]; then
-    canoe4sw_se_install_dir="$default_canoe4sw_se_install_dir"
-  fi
-fi
-
-if [[ -z "$canoe4sw_se_install_dir" ]]; then
-  echo "[error] canoe4sw-se not found."
+	echo "[info] canoe4sw-se found at location: $canoe4sw_se_install_dir"
+	$canoe4sw_se_install_dir/canoe4sw-se --version
+else
+  echo "[error] canoe4sw-se executable not found"
   exit 1
 fi
 
-#display used canoe4sw-se version
-$canoe4sw_se_install_dir/canoe4sw-se --version
-
-if [[ $CANOE_DIR_PROVIDED -eq 0 ]]; then
-  export canoe4sw_se_install_dir # export for createEnvironment.sh
-  "$script_root/createEnvironment.sh"
-  if [[ $? -ne 0 ]]; then
-    echo "[error] createEnvironment.sh failed"
-    exit 1
-  fi
-else
-  echo "[info] canoe4sw_se_install_dir provided externally; skipping createEnvironment.sh"
-fi
+export canoe4sw_se_install_dir
+$script_root/createEnvironment.sh
 
 #run test unit
 echo "[info] Running tests"
