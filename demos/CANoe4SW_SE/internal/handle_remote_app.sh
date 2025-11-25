@@ -7,8 +7,8 @@ ACTION="${1}"          # 'start_little_endian', 'start_big_endian', or 'kill'
 
 # check if user is root
 if [ "$(id -u)" -ne 0 ]; then
-    echo "[error] This script must be run as root / via sudo!"
-    exit 1
+  echo "[error] This script must be run as root / via sudo!"
+  exit 1
 fi
 
 #local related
@@ -25,7 +25,7 @@ REMOTE_DIR="/data/home/amsr_externalipc_vtt_example"
 REMOTE_BIN="./bin/amsr_externalipc_vtt_example"
 REMOTE_INTEGRITY_CHECK="export AMSR_DISABLE_INTEGRITY_CHECK=1"
 REMOTE_START_CMD="cd '$REMOTE_DIR'; $REMOTE_INTEGRITY_CHECK; $REMOTE_BIN >/dev/null 2>&1 &"
-PROCESS_PROCESS_NAME="nalipc_vtt_example"
+REMOTE_PROCESS_NAME="nalipc_vtt_example"
 
 remote_exec() {
   # Usage: remote_exec "Message" "command"
@@ -67,39 +67,30 @@ kill_remote_app() {
   fi
 }
 
-push_config_with_endianness() {
-  local endian="$1"
-  # Rewrite only the endianness value and send result to remote target file
-  sed -E 's/"endianness":[[:space:]]*"(little|big)_endian"/"endianness": "'"$endian"'"/' \
-    "$scriptDir/xipc_vtt_config.json" | sshpass -e ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
-      "$SSH_USER@$SSH_HOST" "cat > '$REMOTE_DIR/etc/xipc_vtt_config.json'"
-}
-
 start_remote_app() {
   local endian="$1"
-  push_config_with_endianness "$endian"
+  remote_exec "Updating endianness configuration to: ($endian)" "sed -ri 's/\"endianness\":[[:space:]]*\"(little|big)_endian\"/\"endianness\": \"$endian\"/' '/data/home/amsr_externalipc_vtt_example/etc/xipc_vtt_config.json'"
   remote_exec "Launching remote server application ($endian)" "$REMOTE_START_CMD" || echo "[warn] Remote start command returned non-zero"
   echo "[info] Sleeping ${DELAY_SECONDS}s to let remote server application start..."
   sleep "$DELAY_SECONDS"
   echo "[info] Remote server application started ($endian)"
 }
 
-if [ "$ACTION" = "kill" ]; then
-  target="${2:-$PROCESS_PROCESS_NAME}"
-  kill_remote_app "$target"
-  exit 0
-fi
-
-if [ "$ACTION" = "start_little_endian" ]; then
-  start_remote_app "little_endian"
-  exit 0
-fi
-
-if [ "$ACTION" = "start_big_endian" ]; then
-  start_remote_app "big_endian"
-  exit 0
-fi
-
-echo "[error] Unknown or missing action: $ACTION"
-echo "Usage: $0 {start_little_endian|start_big_endian|kill [process_name]}"
-exit 1
+case "$ACTION" in
+  kill)
+    target="${2:-$REMOTE_PROCESS_NAME}"
+    kill_remote_app "$target"
+    exit 
+    ;;
+  start_little_endian)
+    start_remote_app "little_endian"
+    ;;
+  start_big_endian)
+    start_remote_app "big_endian"
+    ;;
+  *)
+    echo "[error] Unknown or missing action: $ACTION"
+    echo "Usage: $0 {start_little_endian|start_big_endian|kill [process_name]}"
+    exit 1
+    ;;
+esac

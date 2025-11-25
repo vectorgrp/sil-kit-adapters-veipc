@@ -7,7 +7,7 @@ global-settings:
 
 sil-kit:
   participant-name: CANoe4SW_SE
-  config-file-path: ../CANoe/SilKitConfig_CANoe.silkit.yaml
+  config-file-path: ../SilKitConfig_CANoe.silkit.yaml
 
 datasources:
 - file-path: ../CANoe/veIPC_CANoe_demo.vcdl

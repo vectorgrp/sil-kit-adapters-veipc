@@ -4,26 +4,26 @@
 
 # check if user is root
 if [[ $EUID -ne 0 ]]; then
-    echo "This script must be run as root / via sudo!"
-    exit 1
+  echo "This script must be run as root / via sudo!"
+  exit 1
 fi
 
 echo "[info] Locating canoe4sw-se installation directory"
 default_canoe4sw_se_install_dir="/opt/vector/canoe-server-edition"
 # Check if the executable exists at the default path
 if [[ -x "$default_canoe4sw_se_install_dir/canoe4sw-se" ]]; then
-    canoe4sw_se_install_dir="$default_canoe4sw_se_install_dir"
+  canoe4sw_se_install_dir="$default_canoe4sw_se_install_dir"
 else
-    # If not found at the default path, search for the executable
-	canoe4sw_se_install_dir=$(dirname $(find / -name canoe4sw-se -type f -executable -print -quit 2>/dev/null))
+  # If not found at the default path, search for the executable
+  canoe4sw_se_install_dir=$(dirname $(find / -name canoe4sw-se -type f -executable -print -quit 2>/dev/null))
 fi
 
 if [[ -n "$canoe4sw_se_install_dir" ]]; then
-	echo "canoe4sw-se found at location: $canoe4sw_se_install_dir"
+	echo "[info] canoe4sw-se found at location: $canoe4sw_se_install_dir"
 	$canoe4sw_se_install_dir/canoe4sw-se --version
 else
-    echo "[error] canoe4sw-se executable not found"
-    exit 1
+  echo "[error] canoe4sw-se executable not found"
+  exit 1
 fi
 
 export canoe4sw_se_install_dir
@@ -33,16 +33,15 @@ silKitDir=/home/dev/vfs/SILKit/SilKit-5.0.1-ubuntu-22.04-x86_64-gcc/
 # if "exported_full_path_to_silkit" environment variable is set (in pipeline script), use it. Otherwise, use default value
 silKitDir="${exported_full_path_to_silkit:-$silKitDir}"
 if [ ! -d "$silKitDir" ]; then
-    echo "The var 'silKitDir' needs to be set to actual location of your SIL Kit"
-    exit 1
+  echo "[error] The var 'silKitDir' needs to be set to actual location of your SIL Kit"
+  exit 1
 fi
 
-veIPCDir="$scriptDir/../veIPC"
-imageDir="$veIPCDir/qemu_image"
-logDir=$scriptDir/logs # define a directory for .out files
+imageDir="$scriptDir/qemu_image"
+logDir="$scriptDir/logs" # define a directory for .out files
 mkdir -p $logDir # if it does not exist, create it
 
-HANDLE_REMOTE_APP="$veIPCDir/handle_remote_app.sh"
+HANDLE_REMOTE_APP="$scriptDir/handle_remote_app.sh"
 
 # create a timestamp for log files
 timestamp=$(date +"%Y%m%d_%H%M%S")
@@ -53,8 +52,8 @@ get_qemu_pid() {
 }
 
 cleanup_remote_app() {
-    echo "[info] Requesting remote app kill"
-    "$HANDLE_REMOTE_APP" kill >/dev/null 2>&1 || true
+  echo "[info] Requesting remote app kill"
+  "$HANDLE_REMOTE_APP" kill >/dev/null 2>&1 || true
 }
 
 cleanup_adapter() {
@@ -115,7 +114,7 @@ timeout 30s grep -q 'Press Ctrl-C to terminate...' <(tail -f $logDir/sil-kit-reg
 
 #### start QEMU image
 echo "[info] Preparing host to run QEMU image"
-$veIPCDir/qemu_setup.sh
+$scriptDir/qemu_setup.sh
 echo "[info] Starting QEMU image (background)"
 cd "$imageDir"
 ./run_qemu_image.sh
@@ -130,13 +129,13 @@ echo "[info] Invoking remote-start (start_little_endian)"
 
 #### Start adapter (little_endian)
 echo "[info] Starting SIL Kit adapter (little_endian)"
-"$scriptDir/../../bin/sil-kit-adapter-veipc" 192.168.1.3:6666,toSocket,fromSocket \
-  > "$scriptDir/logs/sil-kit-adapter-veipc-little_endian-$(date +%Y%m%d_%H%M%S).out" 2>&1 &
+"$scriptDir/../../../bin/sil-kit-adapter-veipc" 192.168.1.3:6666,toSocket,fromSocket \
+  > "$scriptDir/logs/sil-kit-adapter-veipc-little_endian_${timestamp}.out" 2>&1 &
 ADAPTER_PID=$!
 echo "[info] Adapter PID: $ADAPTER_PID"
 
 echo "[info] Testing (little_endian)"
-$scriptDir/run.sh
+$scriptDir/../run.sh
 
 exit_status=$?
 if [[ $exit_status -ne 0 ]]; then
@@ -153,12 +152,12 @@ echo "[info] Invoking remote-start (start_big_endian)"
 "$HANDLE_REMOTE_APP" start_big_endian || { echo "[error] remote-start failed"; exit 1; }
 
 echo "[info] Starting SIL Kit adapter (big_endian)"
-"$scriptDir/../../bin/sil-kit-adapter-veipc" 192.168.1.3:6666,toSocket,fromSocket --endianness big_endian \
-  > "$scriptDir/logs/sil-kit-adapter-veipc-big_endian-$(date +%Y%m%d_%H%M%S).out" 2>&1 &
+"$scriptDir/../../../bin/sil-kit-adapter-veipc" 192.168.1.3:6666,toSocket,fromSocket --endianness big_endian \
+  > "$scriptDir/logs/sil-kit-adapter-veipc-big_endian_${timestamp}.out" 2>&1 &
 ADAPTER_PID=$!
 echo "[info] Adapter PID: $ADAPTER_PID"
 
 echo "[info] Testing (big_endian)"
-$scriptDir/run.sh
+$scriptDir/../run.sh
 
 exit $?

@@ -12,7 +12,7 @@ fi
 if [[ -z "$canoe4sw_se_install_dir" ]]; then
   default_canoe4sw_se_install_dir="/opt/vector/canoe-server-edition"
   if [[ -x "$default_canoe4sw_se_install_dir/canoe4sw-se" ]]; then
-    export canoe4sw_se_install_dir="$default_canoe4sw_se_install_dir"
+    canoe4sw_se_install_dir="$default_canoe4sw_se_install_dir"
   fi
 fi
 
@@ -25,6 +25,7 @@ fi
 $canoe4sw_se_install_dir/canoe4sw-se --version
 
 if [[ $CANOE_DIR_PROVIDED -eq 0 ]]; then
+  export canoe4sw_se_install_dir # export for createEnvironment.sh
   "$script_root/createEnvironment.sh"
   if [[ $? -ne 0 ]]; then
     echo "[error] createEnvironment.sh failed"

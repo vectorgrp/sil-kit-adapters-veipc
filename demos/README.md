@@ -98,12 +98,12 @@ Load the ``veIPC_CANoe_demo.cfg`` from the ``./demos/CANoe`` directory. After st
 Before doing this it makes sense to stop the *AutoSender* application first. Optionally you can also start the test unit execution of included test configuration. While the demo server is running the test should be successful. It sends some bytes through the *toSocket* topic, then receives them on the *fromSocket* one.
 
 ### CANoe4SW Server Edition (Windows)
-You can also run the same test set with CANoe4SW SE by executing the following PowerShell script tap/demos/CANoe4SW_SE/run.ps1. The test cases are executed automatically and you should see a short test report in PowerShell after execution.
+You can also run the same test set with CANoe4SW SE by executing the following PowerShell script ./demos/CANoe4SW_SE/run.ps1. The test cases are executed automatically and you should see a short test report in PowerShell after execution.
 
 ### CANoe4SW Server Edition (Linux)
 You can also run the same test set with CANoe4SW SE (Linux). In demos/CANoe4SW_SE/run.sh you should adapt `default_canoe4sw_se_install_dir` to the path of your CANoe4SW SE installation. Afterwards, you can execute demos/CANoe4SW_SE/run.sh. The test cases are executed automatically and you should see a short test report in your terminal after execution.
 
-*Note:* If you are using an older version of CANoe4SW SE, first run the demos/CANoe4SW_SE/createEnvForLinux.ps1 Powershell script on your Windows system using the CANoe4SW SE (Windows) tools to set up the Linux test environment. Then, copy the `Default.venvironment` and `testEchoServer.vtestunit` folders into the demos/CANoe4SW_SE directory on your Linux system. After that, you can execute the demos/CANoe4SW_SE/run.sh script. 
+**Note:** If you are using an older version of CANoe4SW SE, first run the demos/CANoe4SW_SE/createEnvForLinux.ps1 Powershell script on your Windows system using the CANoe4SW SE (Windows) tools to set up the Linux test environment. Then, copy the `Default.venvironment` and `testEchoServer.vtestunit` folders into the demos/CANoe4SW_SE directory on your Linux system. After that, you can execute the demos/CANoe4SW_SE/run.sh script. 
 
 ## Using the SIL Kit Dashboard
 
