@@ -13,5 +13,5 @@ if [ $exit_status -ne 0 ]; then
 fi
 
 echo "[info] Compiling tests"
-$canoe4sw_se_install_dir/test-unit-make $script_root/../tests/testEchoServer.vtestunit.yaml -e $script_root/Default.venvironment -o "$out_dir"
+$canoe4sw_se_install_dir/test-unit-make $script_root/../tests/testEchoServer.vtestunit.yaml -e $out_dir/Default.venvironment -o "$out_dir"
 exit $?
