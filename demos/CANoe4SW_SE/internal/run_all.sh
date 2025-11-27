@@ -88,9 +88,9 @@ fi
 
 #### start SIL Kit registry
 echo "[info] Starting sil-kit-registry"
-$silKitDir/SilKit/bin/sil-kit-registry --listen-uri 'silkit://0.0.0.0:8501' &> $logDir/sil-kit-registry_${timestamp}.out &
+$silKitDir/SilKit/bin/sil-kit-registry --listen-uri 'silkit://0.0.0.0:8501' &> $logDir/sil-kit-registry_internal_${timestamp}.out &
 sleep 1 # wait 1 second for the creation/existense of the .out file
-timeout 30s grep -q 'Press Ctrl-C to terminate...' <(tail -f $logDir/sil-kit-registry_${timestamp}.out -n +1) || { echo "[error] Timeout reached while waiting for sil-kit-registry to start"; exit 1; }
+timeout 30s grep -q 'Press Ctrl-C to terminate...' <(tail -f $logDir/sil-kit-registry_internal_${timestamp}.out -n +1) || { echo "[error] Timeout reached while waiting for sil-kit-registry to start"; exit 1; }
 
 #### start QEMU image
 echo "[info] Preparing host to run QEMU image"
@@ -112,7 +112,7 @@ echo "[info] Invoking remote-start (start_little_endian)"
 #### Start adapter (little_endian)
 echo "[info] Starting SIL Kit adapter (little_endian)"
 "$scriptDir/../../../bin/sil-kit-adapter-veipc" 192.168.1.3:6666,toSocket,fromSocket \
-  > "$scriptDir/logs/sil-kit-adapter-veipc-little_endian_${timestamp}.out" 2>&1 &
+  > "$scriptDir/logs/sil-kit-adapter-veipc-little_endian_internal_${timestamp}.out" 2>&1 &
 ADAPTER_PID=$!
 echo "[info] Adapter PID: $ADAPTER_PID"
 
@@ -135,7 +135,7 @@ echo "[info] Invoking remote-start (start_big_endian)"
 
 echo "[info] Starting SIL Kit adapter (big_endian)"
 "$scriptDir/../../../bin/sil-kit-adapter-veipc" 192.168.1.3:6666,toSocket,fromSocket --endianness big_endian \
-  > "$scriptDir/logs/sil-kit-adapter-veipc-big_endian_${timestamp}.out" 2>&1 &
+  > "$scriptDir/logs/sil-kit-adapter-veipc-big_endian_internal_${timestamp}.out" 2>&1 &
 ADAPTER_PID=$!
 echo "[info] Adapter PID: $ADAPTER_PID"
 
