@@ -35,4 +35,6 @@ jobs:
       linux_scripts: |
         demos/CANoe4SW_SE/run_all.sh
         demos/CANoe4SW_SE/internal/run_all.sh
+      windows_scripts: |
+        demos/CANoe4SW_SE/run_all.ps1
     secrets: inherit
