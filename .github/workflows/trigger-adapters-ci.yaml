@@ -30,7 +30,7 @@ concurrency:
 
 jobs:
   trigger-adapters-ci:
-    uses: pnd/sil-kit-adapters-ci-testing/.github/workflows/sil-kit-adapters-ci.yaml@main
+    uses: pnd/sil-kit-adapters-ci-testing/.github/workflows/sil-kit-adapters-ci.yaml@SKA-923_deactivate_workflow
     with:
       repository_under_test : 'pnd/sil-kit-adapters-veipc'
       branch_under_test: ${{ inputs.branch_under_test != '' && inputs.branch_under_test || (github.event_name == 'pull_request' && github.event.pull_request.head.ref || 'main') }}
