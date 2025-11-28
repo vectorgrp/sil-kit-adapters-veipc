@@ -68,7 +68,9 @@ int main(int argc, char** argv)
         PrintVersion();
         return CodeSuccess;
     }
-
+    
+    PrintVersion();
+    
     asio::io_context ioContext;
     try
     {
