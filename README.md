@@ -68,6 +68,8 @@ The application takes the following command line arguments (defaults in curly br
                          [--registry-uri silkit://<host{localhost}>:<port{8501}>]
                          [--log <Trace|Debug|Warn|{Info}|Error|Critical|Off>]
                          [--endianness <big_endian|{little_endian}>]
+                         [--version]
+                         [--help]
 ```
 There needs to be at least one ``<host>:<port>,<toAdapterTopic>,<fromAdapterTopic>`` argument, and each socket needs to be unique.
 
