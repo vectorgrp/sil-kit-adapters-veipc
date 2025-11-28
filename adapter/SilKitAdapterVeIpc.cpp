@@ -24,6 +24,11 @@ using namespace util;
 
 const std::string adapters::defaultParticipantName = "SilKitAdapterVeIpc";
 
+void PrintVersion()
+{
+    std::cout << "Vector SIL Kit Adapter veIPC - version: " << SILKIT_ADAPTER_VERSION << std::endl;
+}
+
 void print_help(bool userRequested = false)
 {
     // clang-format off
@@ -42,6 +47,8 @@ void print_help(bool userRequested = false)
     std::cout << "\nExample:\n"
         << "sil-kit-adapter-veipc localhost:6666,toSocket,fromSocket " << endiannessArg << " little_endian\n";
 
+    std::cout << "\nPass "<< versionArg <<" to get the version of the Adapter.\n";
+
     if (!userRequested)
         std::cout << "\nPass " << helpArg << " to get this message.\n";
     // clang-format on
@@ -49,11 +56,20 @@ void print_help(bool userRequested = false)
 
 int main(int argc, char** argv)
 {
+    if (findArg(argc, argv, versionArg, argv) != NULL)
+    {
+        PrintVersion();
+        return CodeSuccess;
+    }
+
+    PrintVersion();
+
     if (findArg(argc, argv, helpArg, argv) != NULL)
     {
         print_help(true);
         return CodeSuccess;
     }
+
 
     asio::io_context ioContext;
     try
