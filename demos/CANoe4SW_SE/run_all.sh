@@ -2,10 +2,6 @@
 # SPDX-FileCopyrightText: Copyright 2025 Vector Informatik GmbH
 # SPDX-License-Identifier: MIT
 
-echo "-----------------------------------------------------------------------"
-ps aux | grep sil
-echo "-----------------------------------------------------------------------"
-
 # check if user is root
 if [[ $EUID -ne 0 ]]; then
   echo "[error] This script must be run as root / via sudo!"
