@@ -41,5 +41,5 @@ jobs:
         demos/CANoe4SW_SE/internal/run_all.sh
       windows_scripts: |
         demos/CANoe4SW_SE/run_all.ps1
-      deactivate_workflow: ${{ inputs.deactivate_workflow }}
+      deactivate_workflow: true
     secrets: inherit
