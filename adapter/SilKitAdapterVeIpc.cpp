@@ -31,7 +31,6 @@ void PrintVersion()
 
 void print_help(bool userRequested = false)
 {
-    PrintVersion();
     // clang-format off
     std::cout << "Usage (defaults in curly braces if you omit the switch):" << std::endl
         << "sil-kit-adapter-veipc" 
@@ -57,20 +56,21 @@ void print_help(bool userRequested = false)
 
 int main(int argc, char** argv)
 {
+    if (findArg(argc, argv, versionArg, argv) != NULL)
+    {
+        PrintVersion();
+        return CodeSuccess;
+    }
+
+    PrintVersion();
+
     if (findArg(argc, argv, helpArg, argv) != NULL)
     {
         print_help(true);
         return CodeSuccess;
     }
 
-    if (findArg(argc, argv, versionArg, argv) != NULL)
-    {
-        PrintVersion();
-        return CodeSuccess;
-    }
-    
-    PrintVersion();
-    
+
     asio::io_context ioContext;
     try
     {
