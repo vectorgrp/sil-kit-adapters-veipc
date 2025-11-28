@@ -63,7 +63,7 @@ int main(int argc, char** argv)
         return CodeSuccess;
     }
 
-    if(findArg(argc, argv, versionArg, argv) != NULL)
+    if (findArg(argc, argv, versionArg, argv) != NULL)
     {
         PrintVersion();
         return CodeSuccess;
