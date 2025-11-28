@@ -47,6 +47,7 @@ install_demo(sil-kit-demo-veipc-auto-sender)
 
 install_scripts_to(demos/CANoe4SW_SE
     ${CMAKE_CURRENT_SOURCE_DIR}/demos/CANoe4SW_SE/run.sh
+    ${CMAKE_CURRENT_SOURCE_DIR}/demos/CANoe4SW_SE/run_all.sh
     ${CMAKE_CURRENT_SOURCE_DIR}/demos/CANoe4SW_SE/createEnvironment.sh
 )
 
