@@ -19,7 +19,7 @@ silKitDir=/home/dev/vfs/SILKit/SilKit-5.0.1-ubuntu-22.04-x86_64-gcc/
 silKitDir="${exported_full_path_to_silkit:-$silKitDir}"
 
 # cleanup trap for child processes 
-trap 'children=$(pstree -A -p $$); echo "$children" | grep -Eow "[0-9]+" | grep -v $$ | xargs kill &>/dev/null; exit' EXIT SIGHUP;
+trap 'kill $(jobs -p) >/dev/null 2>&1 || true; exit' EXIT SIGHUP SIGTERM SIGINT;
 
 if [ ! -d "$silKitDir" ]; then
   echo "[error] The var 'silKitDir' needs to be set to actual location of your SIL Kit"
