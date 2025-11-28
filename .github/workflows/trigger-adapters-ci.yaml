@@ -17,6 +17,10 @@ on:
         required: true
         type: string
         default: '["self-hosted", "linux", "ska", "testing"]'
+      deactivate_workflow:
+        required: false
+        type: boolean
+        default: false
   pull_request:
     types: [opened, reopened, synchronize]
 
@@ -37,4 +41,5 @@ jobs:
         demos/CANoe4SW_SE/internal/run_all.sh
       windows_scripts: |
         demos/CANoe4SW_SE/run_all.ps1
+      deactivate_workflow: ${{ inputs.deactivate_workflow }}
     secrets: inherit
