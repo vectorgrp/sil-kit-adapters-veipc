@@ -40,6 +40,7 @@ jobs:
     secrets: inherit
 
   trigger-quality-checks:
+    needs: trigger-integration-tests
     uses: pnd/sil-kit-adapters-ci-testing/.github/workflows/ska-quality-checks.yaml@SKA-923_deactivate_workflow
     with:
       repository_under_test : 'pnd/sil-kit-adapters-veipc'
