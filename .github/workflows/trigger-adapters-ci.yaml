@@ -17,10 +17,6 @@ on:
         required: true
         type: string
         default: '["self-hosted", "linux", "ska", "testing"]'
-      deactivate_workflow:
-        required: false
-        type: boolean
-        default: false
   pull_request:
     types: [opened, reopened, synchronize]
 
@@ -29,8 +25,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  trigger-adapters-ci:
-    uses: pnd/sil-kit-adapters-ci-testing/.github/workflows/sil-kit-adapters-ci.yaml@SKA-923_deactivate_workflow
+  trigger-integration-tests:
+    uses: pnd/sil-kit-adapters-ci-testing/.github/workflows/ska-integration-tests.yaml@SKA-923_deactivate_workflow
     with:
       repository_under_test : 'pnd/sil-kit-adapters-veipc'
       branch_under_test: ${{ inputs.branch_under_test != '' && inputs.branch_under_test || (github.event_name == 'pull_request' && github.event.pull_request.head.ref || 'main') }}
@@ -41,5 +37,13 @@ jobs:
         demos/CANoe4SW_SE/internal/run_all.sh
       windows_scripts: |
         demos/CANoe4SW_SE/run_all.ps1
-      deactivate_workflow: true
+    secrets: inherit
+
+  trigger-quality-checks:
+    uses: pnd/sil-kit-adapters-ci-testing/.github/workflows/ska-quality-checks.yaml@SKA-923_deactivate_workflow
+    with:
+      repository_under_test : 'pnd/sil-kit-adapters-veipc'
+      branch_under_test: ${{ inputs.branch_under_test != '' && inputs.branch_under_test || (github.event_name == 'pull_request' && github.event.pull_request.head.ref || 'main') }}
+      common_repo_commit: ${{ inputs.common_repo_commit }}
+      linux_runner: ${{ inputs.linux_runner != '' && inputs.linux_runner || '["self-hosted", "linux", "ska", "testing"]' }}
     secrets: inherit
