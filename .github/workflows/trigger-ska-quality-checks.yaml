@@ -21,7 +21,7 @@ on:
     types: [opened, reopened, synchronize]
 
 concurrency:
-  group: serialization_group_veipc_quality_checks
+  group: serialization_group_veipc
   cancel-in-progress: false
 
 jobs:
