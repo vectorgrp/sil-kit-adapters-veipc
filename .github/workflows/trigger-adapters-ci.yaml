@@ -17,6 +17,10 @@ on:
         required: true
         type: string
         default: '["self-hosted", "linux", "ska", "testing"]'
+      deactivate_quality_checks:
+        required: false
+        type: boolean
+        default: false
   pull_request:
     types: [opened, reopened, synchronize]
 
@@ -41,7 +45,7 @@ jobs:
 
   trigger-quality-checks:
     needs: trigger-integration-tests
-    if: success() || failure()
+    if: (success() || failure()) && inputs.deactivate_quality_checks == true
     uses: pnd/sil-kit-adapters-ci-testing/.github/workflows/ska-quality-checks.yaml@SKA-923_deactivate_workflow
     with:
       repository_under_test : 'pnd/sil-kit-adapters-veipc'
