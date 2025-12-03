@@ -10,7 +10,8 @@
 #include "common/Cli.hpp"
 #include "common/util/WriteUint.hpp"
 
-#include "asio.hpp"
+#include "asio/io_context.hpp"
+#include "asio/ip/tcp.hpp"
 
 using namespace adapters;
 using namespace adapters::datagram_socket;
