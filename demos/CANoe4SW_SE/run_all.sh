@@ -56,7 +56,7 @@ fi
 
 # cleanup little_endian processes
 echo "[info] Cleaning up little_endian processes"
-kill -2 $demo_id $adapter_id &>/dev/null
+kill -TERM $demo_id $adapter_id &>/dev/null
 counter=0
 while [[ $counter -lt 5 ]] && (kill -0 $demo_id 2>/dev/null || kill -0 $adapter_id 2>/dev/null); do
   sleep 1
@@ -89,7 +89,7 @@ fi
 
 # cleanup big_endian processes
 echo "[info] Cleaning up big_endian processes"
-kill -2 $demo_id $adapter_id &>/dev/null
+kill -TERM $demo_id $adapter_id &>/dev/null
 sleep 1 # wait for processes to terminate and flush logs
 
 # exit run_all.sh with same exit_status
