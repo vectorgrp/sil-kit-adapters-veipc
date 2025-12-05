@@ -19,6 +19,11 @@ configure_silkit_adapter_version(${PROJECT_NAME})
 add_definitions(-DSILKIT_ADAPTER_VERSION="${PROJECT_VERSION}")
 
 include(common/cmake/RepoTargets.cmake)
+include(common/cmake/Building.cmake)
+
+enable_address_sanitizer(${ENABLE_ASAN})
+enable_undefined_sanitizer(${ENABLE_UBSAN})
+enable_thread_sanitizer(${ENABLE_THREADSAN})
 
 add_subdirectory(adapter)
 add_subdirectory(demos)
