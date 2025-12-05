@@ -57,7 +57,15 @@ fi
 # cleanup little_endian processes
 echo "[info] Cleaning up little_endian processes"
 kill -2 $demo_id $adapter_id &>/dev/null
-sleep 1 # wait for processes to terminate
+counter=0
+while [[ $counter -lt 5 ]] && (kill -0 $demo_id 2>/dev/null || kill -0 $adapter_id 2>/dev/null); do
+  sleep 1
+  ((counter++))
+done
+if kill -0 $demo_id 2>/dev/null || kill -0 $adapter_id 2>/dev/null; then
+  echo "[error] Failed to terminate little_endian processes after 5 seconds"
+  exit 1
+fi
 
 # run the tests with big_endian configuration
 echo "[info] Starting echo server (big_endian)"
