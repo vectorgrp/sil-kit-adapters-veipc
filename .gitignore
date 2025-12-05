@@ -30,4 +30,4 @@ lib/
 **/*.vtestunit/
 
 # ignore QEMU built image
-**/silkit-qemu-demos-guest.qcow2
+**/qemu_image

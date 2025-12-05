@@ -4,6 +4,12 @@
 cmake_minimum_required(VERSION 3.13)
 project(VectorSilKitAdapterVeIpc)
 
+option(BUILD_LINUX_PACKAGE "Creates a SIL Kit Adapter veIPC build suitable for package managers in Linux Distributions (.deb)" OFF)
+
+if(BUILD_LINUX_PACKAGE)
+    add_subdirectory(docs/man)
+endif()
+
 set(SILKIT_ADAPTER_VEIPC_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 set(SILKIT_ADAPTER_VEIPC_LIBRARY_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/lib")
 
@@ -32,7 +38,9 @@ install_adapter_source(
     ${CMAKE_CURRENT_SOURCE_DIR}/adapter
     ${CMAKE_CURRENT_SOURCE_DIR}/demos
     ${CMAKE_CURRENT_SOURCE_DIR}/cmake
+    ${CMAKE_CURRENT_SOURCE_DIR}/docs
 )
+
 install_git_source(${CMAKE_CURRENT_SOURCE_DIR}/common)
 install_root_source_files()
 
