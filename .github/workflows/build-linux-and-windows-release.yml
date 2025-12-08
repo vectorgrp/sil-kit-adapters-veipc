@@ -14,6 +14,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           submodules: recursive
       - name: Build
         uses: ./.github/actions/build-cmake-preset
@@ -26,7 +27,7 @@ jobs:
           prerelease: true
           draft: true
           files: |
-            _build/linux-release/SilKit-Adapter*.zip
+            build/linux-release/SilKit-Adapter*.zip
 
   windows-release:
     name: Build SIL Kit Adapter veIPC for Windows Release configuration
@@ -36,6 +37,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           submodules: recursive
       - name: Build
         uses: ./.github/actions/build-cmake-preset
@@ -48,4 +50,4 @@ jobs:
           prerelease: true
           draft: true
           files: |
-            _build/windows-release/SilKit-Adapter*.zip
+            build/windows-release/SilKit-Adapter*.zip
