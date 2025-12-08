@@ -37,6 +37,8 @@ echo "[info] Starting echo server (little_endian)"
 $scriptDir/../../bin/sil-kit-demo-veipc-echo-server --endianness little_endian &> $logdir/sil-kit-demo-veipc-echo-server_little_endian_$timestamp.out &
 demo_id=$!
 
+sleep 2 # wait for the echo server to start 
+
 echo "[info] Starting the adapter (little_endian)"
 $scriptDir/../../bin/sil-kit-adapter-veipc localhost:6666,toSocket,fromSocket --endianness little_endian \
   &> $logdir/sil-kit-adapter-veipc_little_endian_$timestamp.out &
@@ -71,6 +73,8 @@ fi
 echo "[info] Starting echo server (big_endian)"
 $scriptDir/../../bin/sil-kit-demo-veipc-echo-server --endianness big_endian &> $logdir/sil-kit-demo-veipc-echo-server_big_endian_$timestamp.out &
 demo_id=$!
+
+sleep 2 # wait for the echo server to start 
 
 echo "[info] Starting the adapter (big_endian)"
 $scriptDir/../../bin/sil-kit-adapter-veipc localhost:6666,toSocket,fromSocket --endianness big_endian \
