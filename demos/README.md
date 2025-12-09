@@ -32,7 +32,7 @@ Then, launch the adapter in a separate terminal, which connects to the registry 
 
 ```
 ./bin/sil-kit-adapter-veipc localhost:6666,toSocket,fromSocket --endianness little_endian
-[date time] [SilKitAdapterVeIpc] [info] Creating participant, ParticipantName: SilKitAdapterVeIpc, RegistryUri: silkit://localhost:8501, SilKitVersion: 5.0.1
+[date time] [SilKitAdapterVeIpc] [info] Creating participant, ParticipantName: SilKitAdapterVeIpc, RegistryUri: silkit://localhost:8501, SilKitVersion: 5.0.2
 [date time] [SilKitAdapterVeIpc] [info] Connected to registry at 'tcp://127.0.0.1:8501' via 'tcp://127.0.0.1:47356' (local:///tmp/SilKitRegi1c2f6436cf7eedb.silkit, tcp://localhost:8501)
 [date time] [SilKitAdapterVeIpc] [info] Socket connection successfully established
 Press CTRL + C to stop the process...
