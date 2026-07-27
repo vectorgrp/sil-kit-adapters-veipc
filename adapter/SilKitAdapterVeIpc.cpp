@@ -26,7 +26,7 @@ const std::string adapters::defaultParticipantName = "SilKitAdapterVeIpc";
 
 void PrintVersion()
 {
-    std::cout << "Vector SIL Kit Adapter veIPC - version: " << SILKIT_ADAPTER_VERSION << std::endl;
+    std::cout << "SIL Kit Adapter veIPC - version: " << SILKIT_ADAPTER_VERSION << std::endl;
 }
 
 void print_help(bool userRequested = false)

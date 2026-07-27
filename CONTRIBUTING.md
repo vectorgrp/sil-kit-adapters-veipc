@@ -1,6 +1,6 @@
-# Contributing to Vector SIL Kit Adapter veIPC
+# Contributing to SIL Kit Adapter veIPC
 
-Welcome and thank you for your interest in contributing to the Vector SIL Kit Adapter veIPC
+Welcome and thank you for your interest in contributing to the SIL Kit Adapter veIPC
 open source project.
 
 We are sorry, but at the moment, we do not accept external contributions until

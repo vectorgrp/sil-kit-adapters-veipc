@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 	
 cmake_minimum_required(VERSION 3.13)
-project(VectorSilKitAdapterVeIpc)
+project(SilKitAdapterVeIpc)
 
 option(BUILD_LINUX_PACKAGE "Creates a SIL Kit Adapter veIPC build suitable for package managers in Linux Distributions (.deb)" OFF)
 
