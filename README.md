@@ -3,7 +3,7 @@
 [![SocialNetwork](https://img.shields.io/badge/vectorgrp%20LinkedIn®-rgb(0,113,176))](https://www.linkedin.com/company/vectorgrp/)\
 [![ReleaseBadge](https://img.shields.io/github/v/release/vectorgrp/sil-kit-adapters-veipc.svg)](https://github.com/vectorgrp/sil-kit-adapters-veipc/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/vectorgrp/sil-kit-adapters-qemu/blob/main/LICENSE)
-[![Win & Linux Builds](https://github.com/vectorgrp/sil-kit-adapters-veipc/actions/workflows/build-linux-and-windows-release.yml/badge.svg)](https://github.com/vectorgrp/sil-kit-adapters-veipc/actions/workflows/build-linux-and-windows-release.yml)
+[![Release](https://github.com/vectorgrp/sil-kit-adapters-veipc/actions/workflows/release.yaml/badge.svg)](https://github.com/vectorgrp/sil-kit-adapters-veipc/actions/workflows/release.yaml)
 [![SIL Kit](https://img.shields.io/badge/SIL%20Kit-353b42?logo=github&logoColor=969da4)](https://github.com/vectorgrp/sil-kit)
 
 This collection of software is provided to illustrate how the [SIL Kit](https://github.com/vectorgrp/sil-kit/) can be attached to a socket provided by the Vector MICROSAR Adaptive veIPC (Vector Module for Interprocessor Communication) component. This particular socket feature is available with Vector MICROSAR Adaptive version r12.25.40 and newer. For more information regarding this component in general please refer to [MICROSAR Adaptive Product Information](https://www.vector.com/us/en/download/microsar-adaptive-product-information/) and the chapters regarding External Communication (Ext.Com) inside this document.
