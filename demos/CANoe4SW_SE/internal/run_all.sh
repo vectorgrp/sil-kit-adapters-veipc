@@ -25,7 +25,6 @@ HANDLE_REMOTE_APP="$scriptDir/handle_remote_app.sh"
 
 # create a timestamp for log files
 timestamp=$(date +"%Y%m%d_%H%M%S")
-DELAY_SECONDS=5
 
 get_qemu_pid() {
   pgrep -f 'qemu-system-x86_64 .* -drive file=output/disk-qemu.vmdk,if=ide,id=drv0 .* -kernel output/ifs.bin' | head -n1 || true
@@ -99,8 +98,7 @@ echo "[info] Starting QEMU image (background)"
 cd "$imageDir"
 ./run_qemu_image.sh
 echo "[info] QEMU started; active PID: $(get_qemu_pid)"
-echo "[info] Sleeping ${DELAY_SECONDS}s to let SSH service start..."
-sleep "$DELAY_SECONDS"
+"$HANDLE_REMOTE_APP" wait_ssh 120 || { echo "[error] QEMU guest did not become reachable"; exit 1; }
 
 echo "[info] Requesting remote app configuration file update"
 "$HANDLE_REMOTE_APP" init_config_file || { echo "[error] remote-init_config_file failed"; exit 1; }

@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 set -e
 
-ACTION="${1}"          # 'start_little_endian', 'start_big_endian', or 'kill'
+ACTION="${1}"          # 'wait_ssh', 'init_config_file', 'start_little_endian', 'start_big_endian', or 'kill'
 
 # check if user is root
 if [ "$(id -u)" -ne 0 ]; then
@@ -81,7 +81,27 @@ start_remote_app() {
   echo "[info] Remote server application started ($endian)"
 }
 
+wait_for_ssh() {
+  # Usage: wait_for_ssh <timeout_seconds>
+  # The guest boot time varies a lot (e.g. without KVM or on a loaded host), so poll instead of a fixed sleep.
+  local timeout="$1"
+  local start=$SECONDS
+  echo "[info] Waiting up to ${timeout}s for SSH on $SSH_HOST..."
+  until sshpass -e ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=2 \
+        "$SSH_USER@$SSH_HOST" true >/dev/null 2>&1; do
+    if (( SECONDS - start >= timeout )); then
+      echo "[error] SSH on $SSH_HOST not reachable after ${timeout}s"
+      return 1
+    fi
+    sleep 2
+  done
+  echo "[info] SSH on $SSH_HOST reachable after $((SECONDS - start))s"
+}
+
 case "$ACTION" in
+  wait_ssh)
+    wait_for_ssh "${2:-120}"
+    ;;
   kill)
     target="${2:-$REMOTE_PROCESS_NAME}"
     kill_remote_app "$target"
@@ -98,7 +118,7 @@ case "$ACTION" in
     ;;
   *)
     echo "[error] Unknown or missing action: $ACTION"
-    echo "Usage: $0 {start_little_endian|start_big_endian|kill [process_name]}"
+    echo "Usage: $0 {wait_ssh [timeout_s]|init_config_file|start_little_endian|start_big_endian|kill [process_name]}"
     exit 1
     ;;
 esac
